@@ -10,7 +10,12 @@
 | to using a Closure or controller method. Build something great!
 |
 */
+Route::auth();
+Route::get('/', 'Controller@welcome');
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::resource('personas', 'PersonasController');
+Route::resource('edadcategorias', 'EdadCategoriasController');
+Route::resource('idiomas', 'IdiomasController');
+Route::resource('ocupaciones', 'OcupacionesController');
+Route::resource('territorios', 'TerritoriosController');
+Route::resource('diezmos', 'DiezmosController');
