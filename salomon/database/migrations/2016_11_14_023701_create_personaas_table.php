@@ -35,7 +35,6 @@ class CreatePersonaasTable extends Migration
             foreign key's (FK's)
             */
             $table->integer('idioma_nativo_id')->nullable();
-            $table->integer('categoria_id')->unsigned()->nullable();
             /*
             (niño, adolescente, joven, adulto) el categoria es automático con la fecha de nacimiento, se establecen edades límite para cada rango en un ABM de categorias
             */
@@ -56,7 +55,6 @@ class CreatePersonaasTable extends Migration
             */
             $table->foreign('ocupacion_id')->references('id')->on('ocupaciones');
             $table->foreign('territorio_id')->references('id')->on('territorios');
-            $table->foreign('categoria_id')->references('id')->on('edadcategorias');
 //            $table->foreign('idioma_nativo_id')->references('id')->on('idiomas');            
             $table->foreign('conyugue_id')->references('id')->on('personas');
             $table->foreign('padre_id')->references('id')->on('personas');

@@ -5,8 +5,22 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Territorio;
 
+use Validator, Redirect, Input, Session;
+
 class TerritoriosController extends Controller
 {
+    /**
+     * Retorna un territorio en formato json
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getTerritorio(Request $request)
+    {
+        $territorio = Territorio::findOrFail($request->get('id'));
+
+        return response()->json($territorio);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +28,9 @@ class TerritoriosController extends Controller
      */
     public function index()
     {
-        //
+        $territorios = Territorio::orderBy('descripcion')->paginate(10);
+
+        return view('territorios/index', ['territorios'=> $territorios]);
     }
 
     /**
@@ -35,7 +51,28 @@ class TerritoriosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules = [
+            'descripcion' => 'required'
+        ];
+        $errors = [
+            'descripcion' => 'Debe completar el nombre del territorio'
+        ];
+        $validator = Validator::make($request->all(), $rules, $errors);
+
+        if ($validator->fails()) {
+            return Redirect::to('territorios')
+                ->withErrors($errors)
+                ->withInput($request->all());
+        } else {
+            // store
+            $input = $request->all();
+            
+            Territorio::create($input);
+
+            Session::flash('flash_message', 'Nuevo Territorio guardado con &eacute;xito!');
+
+            return redirect('/territorios');
+        }
     }
 
     /**
@@ -69,7 +106,30 @@ class TerritoriosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $rules = [
+            'descripcion' => 'required'
+        ];
+        $errors = [
+            'descripcion' => 'Debe completar el nombre del territorio'
+        ];
+        $validator = Validator::make($request->all(), $rules, $errors);
+        // process the login
+        if ($validator->fails()) {
+            return Redirect::to('territorios')
+                ->withErrors($errors)
+                ->withInput($request->all());
+        } else {
+            // store
+            $input = $request->all();
+
+            $territorio = Territorio::findOrFail($id);
+            
+            $territorio->fill($input)->save();
+
+            Session::flash('flash_message', 'Territorio editado con &eacute;xito!');
+
+            return redirect('/territorios');
+        }
     }
 
     /**
@@ -80,6 +140,8 @@ class TerritoriosController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $territorio = Territorio::findOrFail($id);
+        $territorio->delete();
+        return redirect('/territorios');
     }
 }

@@ -23,6 +23,5 @@
         </div>
         
         @yield('scripts')
-        <script type="text/javascript" src="js/layouts/navbar.js"></script>
     </body>
 </html>
