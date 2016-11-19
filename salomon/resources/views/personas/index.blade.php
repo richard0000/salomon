@@ -33,5 +33,6 @@
 @endsection
 
 @section('scripts')
+	{{ Html::script('js/layouts/modals.js') }}
 	{{ Html::script('js/personas/index.js') }}
 @endsection
