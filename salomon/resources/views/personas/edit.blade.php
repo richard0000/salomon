@@ -20,13 +20,23 @@
     	'route' => ['personas.update', $persona->id]])
      !!}
 		<p>
-		    {!! Form::label('nombre', 'Nombre:') !!}
-		    {!! Form::text('nombre', null, ['class' => 'w3-input', 'required' => 'required']) !!}
+		    <label for="nombre" class="{{ $errors->has('nombre') ? ' w3-validate' : '' }}">Nombre:</label>
+		    {!! Form::text('nombre', null, ['class' => 'w3-input', 'required' => 'required' ]) !!}
+	        @if ($errors->has('nombre'))
+	             <div class="w3-animate-fading w3-text-red">
+	                {{ $errors->first('nombre') }}
+	            </div>
+	        @endif
 		</p>
 
 		<p>
-		    {!! Form::label('apellido', 'Apellido:') !!}
-		    {!! Form::text('apellido', null, ['class' => 'w3-input', 'required' => 'required']) !!}
+		    <label for="apellido" class="{{ $errors->has('apellido') ? ' w3-validate' : '' }}">Apellido:</label>
+		    {!! Form::text('apellido', null, ['class' => 'w3-input', 'required' => 'required' ]) !!}
+	        @if ($errors->has('apellido'))
+	             <div class="w3-animate-fading w3-text-red">
+	                {{ $errors->first('apellido') }}
+	            </div>
+	        @endif
 		</p>
 
 		<p>
@@ -50,15 +60,24 @@
 		</p>
 
 		<p>
-		    {!! Form::label('email', 'Email:') !!}
+		    <label for="email" class="{{ $errors->has('email') ? ' w3-validate' : '' }}">Email:</label>
 		    {!! Form::text('email', null, ['class' => 'w3-input']) !!}
+	        @if ($errors->has('email'))
+	             <div class="w3-animate-fading w3-text-red">
+	                {{ $errors->first('email') }}
+	            </div>
+	        @endif
 		</p>
 
 		<p>
-		    {!! Form::label('fecha_nacimiento', 'Fecha de Nacimiento:') !!}
-		    {!! Form::text('fecha_nacimiento', null, ['class' => 'w3-input']) !!}
+		    <label for="fecha_de_nacimiento" class="{{ $errors->has('fecha_de_nacimiento') ? ' w3-validate' : '' }}">Fecha de Nacimiento:</label>
+		    {!! Form::text('fecha_de_nacimiento', null, ['id' => 'datepicker']) !!}
+	        @if ($errors->has('fecha_de_nacimiento'))
+	             <div class="w3-animate-fading w3-text-red">
+	                {{ $errors->first('fecha_de_nacimiento') }}
+	            </div>
+	        @endif
 		</p>
-
 		<p>
 		    {!! Form::label('sexo', 'G&eacute;nero:') !!}
 		    {!! Form::select('sexo', ['M' => 'Masculino', 'F' => 'Femenino'], null, ['class' => 'w3-input']) !!}
@@ -93,4 +112,9 @@
 			{!! Form::submit('Aceptar', ['class' => 'w3-btn w3-grey'])  !!}
 		</p>
 	{!! Form::close() !!} 
+@endsection
+
+@section('scripts')
+	{{ Html::script('js/datepicker.js') }}
+	{{ Html::script('js/personas/edit.js') }}
 @endsection

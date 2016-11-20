@@ -71,4 +71,9 @@ class Persona extends Model
 		'created_at',
 		'updated_at'
 	];
+
+    public function diezmos()
+    {
+        return $this->hasMany('App\Diezmo');
+    }
 }

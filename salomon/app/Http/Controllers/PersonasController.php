@@ -7,6 +7,7 @@ use App\Persona;
 use App\Territorio;
 use App\Ocupacion;
 use App\Idioma;
+use Carbon\Carbon;
 
 use Validator, Redirect, Input, Session;
 
@@ -62,19 +63,25 @@ class PersonasController extends Controller
             'apellido' => 'required',
             'nombre' => 'required',
             'email' => 'email',
-            'fecha_nacimiento' => 'date_format:d-m-Y',
-            'fecha_fallecimiento' => 'date_format:d-m-Y'
+            'fecha_de_nacimiento' => 'date_format:d-m-Y'
         ];
         $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
             return Redirect::to('personas')
-                ->withErrors($errors)
+                ->withErrors($validator)
                 ->withInput($request->all());
         } else {
             // store
             $input = $request->all();
-            
+
+            if (($input['fecha_de_nacimiento'] !== null)&&($input['fecha_de_nacimiento'] !== '')) {
+                dd($input['fecha_de_nacimiento'] == '');
+                $input['fecha_de_nacimiento'] = Carbon::createFromFormat('d-m-Y', $input['fecha_de_nacimiento']);
+            }else{
+                $input['fecha_de_nacimiento'] = null;
+            }
+
             Persona::create($input);
 
             Session::flash('flash_message', 'Nueva persona guardado con &eacute;xito!');
@@ -134,19 +141,24 @@ class PersonasController extends Controller
             'apellido' => 'required',
             'nombre' => 'required',
             'email' => 'email',
-            'fecha_nacimiento' => 'date_format:d-m-Y',
-            'fecha_fallecimiento' => 'date_format:d-m-Y'
+            'fecha_de_nacimiento' => 'date_format:d-m-Y'
         ];
         $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
             return Redirect::to('personas')
-                ->withErrors($errors)
+                ->withErrors($validator)
                 ->withInput($request->all());
         } else {
             // store
             $input = $request->all();
             
+            if (($input['fecha_de_nacimiento'] !== null)&&($input['fecha_de_nacimiento'] !== '')) {
+                $input['fecha_de_nacimiento'] = Carbon::createFromFormat('d-m-Y', $input['fecha_de_nacimiento']);
+            }else{
+                $input['fecha_de_nacimiento'] = null;
+            }
+
             $persona = Persona::findOrFail($id);
 
             $persona->fill($input)->save();

@@ -11,9 +11,18 @@
 			Configuracion
 		</a>
 		<div id="Demo1" class="w3-accordion-content">
-			<a href="{{ url('/idiomas') }}"><i class="fa fa-language"></i> Idiomas</a>
-			<a href="{{ url('/ocupaciones') }}"><i class="fa fa-graduation-cap"></i> Ocupaciones</a>
-			<a href="{{ url('/territorios') }}"><i class="fa fa-map-marker"></i> Territorios</a>
+			<a href="{{ url('/ocupaciones') }}">
+				<i class="fa fa-graduation-cap"></i> Ocupaciones
+			</a>
+			<a href="{{ url('/idiomas') }}">
+				<i class="fa fa-language"></i> Idiomas
+			</a>
+			<a href="{{ url('/edadcategorias') }}">
+				<i class="fa fa-graduation-cap"></i> Categor&iacute;as de Edad
+			</a>
+			<a href="{{ url('/territorios') }}">
+				<i class="fa fa-map-marker"></i> Territorios
+			</a>
 		</div>
 	</div>
 </nav>

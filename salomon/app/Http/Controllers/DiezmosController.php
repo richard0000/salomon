@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Persona;
 use App\Diezmo;
+use Carbon\Carbon;
+
+use Validator, Redirect, Input, Session, DB;
 
 class DiezmosController extends Controller
 {
@@ -14,7 +18,16 @@ class DiezmosController extends Controller
      */
     public function index()
     {
-        echo "hola";
+        //Para mosrar las fechas en castellano
+        Carbon::setLocale('es');
+        setlocale(LC_TIME, config('app.locale'));
+
+        $diezmos = Diezmo::with('persona')
+            ->orderBy('fecha')->paginate(30);
+
+        return view('diezmos.index', [
+            'diezmos' => $diezmos
+        ]);
     }
 
     /**
@@ -24,7 +37,13 @@ class DiezmosController extends Controller
      */
     public function create()
     {
-        //
+        $personas = Persona::select('id', DB::raw('concat(apellido, ", ", nombre) as apellido'))
+            ->orderBy('apellido')
+            ->pluck('apellido', 'id');
+
+        return view('diezmos.create', [
+            'personas' => $personas
+        ]);
     }
 
     /**
@@ -35,7 +54,29 @@ class DiezmosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules = [
+            'persona_id' => 'required',
+            'fecha' => 'required|date_format:d-m-Y',
+            'importe' => 'required|numeric'
+        ];
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return Redirect::to('diezmos/create')
+                ->withErrors($validator)
+                ->withInput($request->all());
+        } else {
+            // store
+            $input = $request->all();
+
+            $input['fecha'] = Carbon::createFromFormat('d-m-Y', $input['fecha']);
+            
+            Diezmo::create($input);
+
+            Session::flash('flash_message', 'Nuevo diezmo cargado con &eacute;xito!');
+
+            return redirect('/diezmos');
+        }
     }
 
     /**
@@ -57,7 +98,15 @@ class DiezmosController extends Controller
      */
     public function edit($id)
     {
-        //
+        $diezmo = Diezmo::findOrFail($id);
+
+        $personas = Persona::orderBy('nombre', 'apellido')
+            ->pluck('nombre', 'apellido', 'id');
+
+        return view('diezmos.edit', [
+            'diezmo' => $diezmo,
+            'personas' => $personas
+        ]);
     }
 
     /**
@@ -69,7 +118,31 @@ class DiezmosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $rules = [
+            'persona_id' => 'required',
+            'fecha' => 'required|date_format:d-m-Y',
+            'importe' => 'required|numeric'
+        ];
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return Redirect::to('diezmos/update')
+                ->withErrors($validator)
+                ->withInput($request->all());
+        } else {
+            // store
+            $input = $request->all();
+
+            $input['fecha'] = Carbon::createFromFormat('d-m-Y', $input['fecha']);
+            
+            $diezmo = Diezmo::findOrFail($id);
+
+            $diezmo::fill($input)->save();
+
+            Session::flash('flash_message', 'Los datos del diezmo fueron modificados con &eacute;xito!');
+
+            return redirect('/diezmos');
+        }
     }
 
     /**
@@ -80,6 +153,8 @@ class DiezmosController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $diezmo = Diezmo::findOrFail($id);
+        $diezmo->delete();
+        return redirect('/diezmos');
     }
 }

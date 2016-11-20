@@ -51,16 +51,13 @@ class IdiomasController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'descripcion' => 'required'
+            'descripcion' => 'required|unique:idiomas'
         ];
-        $errors = [
-            'descripcion' => 'Debe completar el nombre del idioma'
-        ];
-        $validator = Validator::make($request->all(), $rules, $errors);
+        $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
             return Redirect::to('idiomas')
-                ->withErrors($errors)
+                ->withErrors($validator)
                 ->withInput($request->all());
         } else {
             // store
@@ -106,16 +103,13 @@ class IdiomasController extends Controller
     public function update(Request $request, $id)
     {
         $rules = [
-            'descripcion' => 'required'
+            'descripcion' => 'required|unique:idiomas'
         ];
-        $errors = [
-            'descripcion' => 'Debe completar el nombre del idioma'
-        ];
-        $validator = Validator::make($request->all(), $rules, $errors);
+        $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
             return Redirect::to('idiomas')
-                ->withErrors($errors)
+                ->withErrors($validator)
                 ->withInput($request->all());
         } else {
             // store

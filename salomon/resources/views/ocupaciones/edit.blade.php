@@ -5,7 +5,7 @@
 @endsection
 
 @section('modal-edit-content')
-        {!! Form::open(['method' => 'PATCH', 'id' => 'formEdit', 'route' => ['ocupaciones.update', $persona->id]]) !!}
+        {!! Form::open(['method' => 'PATCH', 'id' => 'formEdit', 'route' => ['ocupaciones.update', 1]]) !!}
 		<p>
 		    {!! Form::label('descripcion', 'Nombre:') !!}
 		    {!! Form::text('descripcion', null, ['class' => 'w3-input',' id' => 'descripcion_e']) !!}

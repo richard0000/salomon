@@ -52,16 +52,13 @@ class TerritoriosController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'descripcion' => 'required'
+            'descripcion' => 'required|unique:territorios'
         ];
-        $errors = [
-            'descripcion' => 'Debe completar el nombre del territorio'
-        ];
-        $validator = Validator::make($request->all(), $rules, $errors);
+        $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
             return Redirect::to('territorios')
-                ->withErrors($errors)
+                ->withErrors($validator)
                 ->withInput($request->all());
         } else {
             // store
@@ -107,16 +104,13 @@ class TerritoriosController extends Controller
     public function update(Request $request, $id)
     {
         $rules = [
-            'descripcion' => 'required'
+            'descripcion' => 'required|unique:territorios'
         ];
-        $errors = [
-            'descripcion' => 'Debe completar el nombre del territorio'
-        ];
-        $validator = Validator::make($request->all(), $rules, $errors);
-        // process the login
+        $validator = Validator::make($request->all(), $rules);
+
         if ($validator->fails()) {
             return Redirect::to('territorios')
-                ->withErrors($errors)
+                ->withErrors($validator)
                 ->withInput($request->all());
         } else {
             // store
