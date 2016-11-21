@@ -16,17 +16,35 @@ class DiezmosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //Para mosrar las fechas en castellano
         Carbon::setLocale('es');
         setlocale(LC_TIME, config('app.locale'));
 
-        $diezmos = Diezmo::with('persona')
-            ->orderBy('fecha')->paginate(30);
+        /*personas para mostrar en el select*/
+        $personas = Persona::select('id', DB::raw('concat(apellido, ", ", nombre) as apellido'))
+            ->orderBy('apellido')
+            ->pluck('apellido', 'id')
+            ->prepend('--TODOS--', 0);
+
+        /*persona actualmente seleccionada*/
+        $persona_id = $request->get('persona_id') ?? null;
+
+        /*vemos si hay seleccionada una persona o todos*/
+        if(($persona_id !== null)&&($persona_id !== '0')){
+            $diezmos = Persona::findOrFail($persona_id)
+                ->diezmos()
+                ->paginate(30);
+        }else{
+            $diezmos = Diezmo::with('persona')
+                ->orderBy('fecha')->paginate(30);
+        }
 
         return view('diezmos.index', [
-            'diezmos' => $diezmos
+            'diezmos' => $diezmos,
+            'personas' => $personas,
+            'persona_id' => $persona_id
         ]);
     }
 

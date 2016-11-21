@@ -18,7 +18,7 @@
 				<i class="fa fa-language"></i> Idiomas
 			</a>
 			<a href="{{ url('/edadcategorias') }}">
-				<i class="fa fa-graduation-cap"></i> Categor&iacute;as de Edad
+				<i class="fa fa-child"></i> Categor&iacute;as de Edad
 			</a>
 			<a href="{{ url('/territorios') }}">
 				<i class="fa fa-map-marker"></i> Territorios
