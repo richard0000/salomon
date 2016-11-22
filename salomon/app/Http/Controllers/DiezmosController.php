@@ -23,7 +23,7 @@ class DiezmosController extends Controller
         setlocale(LC_TIME, config('app.locale'));
 
         /*personas para mostrar en el select*/
-        $personas = Persona::select('id', DB::raw('concat(apellido, ", ", nombre) as apellido'))
+        $personas = Persona::select('id', DB::raw('concat(nombre, " ", apellido) as apellido'))
             ->orderBy('apellido')
             ->pluck('apellido', 'id')
             ->prepend('--TODOS--', 0);
@@ -41,7 +41,7 @@ class DiezmosController extends Controller
                 ->orderBy('fecha')->paginate(30);
         }
 
-        return view('diezmos.index', [
+        return $this->vista('diezmos.index', [
             'diezmos' => $diezmos,
             'personas' => $personas,
             'persona_id' => $persona_id
@@ -55,11 +55,11 @@ class DiezmosController extends Controller
      */
     public function create()
     {
-        $personas = Persona::select('id', DB::raw('concat(apellido, ", ", nombre) as apellido'))
+        $personas = Persona::select('id', DB::raw('concat(nombre, " ", apellido) as apellido'))
             ->orderBy('apellido')
             ->pluck('apellido', 'id');
 
-        return view('diezmos.create', [
+        return $this->vista('diezmos.create', [
             'personas' => $personas
         ]);
     }
@@ -118,10 +118,11 @@ class DiezmosController extends Controller
     {
         $diezmo = Diezmo::findOrFail($id);
 
-        $personas = Persona::orderBy('nombre', 'apellido')
-            ->pluck('nombre', 'apellido', 'id');
+        $personas = Persona::select('id', DB::raw('concat(nombre, " ", apellido) as apellido'))
+            ->orderBy('apellido')
+            ->pluck('apellido', 'id');
 
-        return view('diezmos.edit', [
+        return $this->vista('diezmos.edit', [
             'diezmo' => $diezmo,
             'personas' => $personas
         ]);

@@ -19,3 +19,4 @@ Route::resource('idiomas', 'IdiomasController');
 Route::resource('ocupaciones', 'OcupacionesController');
 Route::resource('territorios', 'TerritoriosController');
 Route::resource('diezmos', 'DiezmosController');
+Route::resource('iglesias', 'IglesiasController');

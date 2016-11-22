@@ -41,6 +41,10 @@ $app->singleton(
     App\Exceptions\Handler::class
 );
 
+$app->singleton(
+    App\Iglesia::class
+);
+
 /*
 |--------------------------------------------------------------------------
 | Return The Application

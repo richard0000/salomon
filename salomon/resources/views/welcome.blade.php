@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('precontent')
-	<img src="img/backgrounds/world.jpg" alt="World" style="width:100%">
+	<img src="img/backgrounds/world.jpg" alt="world" style="width:100%">
 @endsection
 
 @section('content')

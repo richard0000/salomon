@@ -30,7 +30,7 @@ class OcupacionesController extends Controller
     {
         $ocupaciones = ocupacion::orderBy('descripcion')->paginate(10);
 
-        return view('ocupaciones/index', ['ocupaciones'=> $ocupaciones]);
+        return $this->vista('ocupaciones/index', ['ocupaciones'=> $ocupaciones]);
     }
 
     /**

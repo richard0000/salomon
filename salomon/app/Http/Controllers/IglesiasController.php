@@ -3,23 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Idioma;
+use App\Iglesia;
+use App\Persona;
 
-use Validator, Redirect, Input, Session;
+use Validator, Redirect, Input, Session, DB;
 
-class IdiomasController extends Controller
+class IglesiasController extends Controller
 {
-    /**
-     * Retorna un idioma en formato json
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function getIdioma(Request $request)
-    {
-        $idioma = Idioma::findOrFail($request->get('id'));
-
-        return response()->json($idioma);
-    }
     /**
      * Display a listing of the resource.
      *
@@ -27,9 +17,9 @@ class IdiomasController extends Controller
      */
     public function index()
     {
-        $idiomas = Idioma::orderBy('descripcion')->paginate(10);
+        $iglesias = Iglesia::orderBy('nombre')->paginate(10);
 
-        return $this->vista('idiomas/index', ['idiomas'=> $idiomas]);
+        return $this->vista('iglesias.index', ['iglesias'=> $iglesias]);
     }
 
     /**
@@ -39,7 +29,13 @@ class IdiomasController extends Controller
      */
     public function create()
     {
-        //
+        $personas = Persona::select('id', DB::raw('concat(nombre, " ", apellido) as apellido'))
+            ->orderBy('apellido')
+            ->pluck('apellido', 'id');
+
+        return $this->vista('iglesias.create', [
+            'personas' => $personas
+        ]);
     }
 
     /**
@@ -51,23 +47,24 @@ class IdiomasController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'descripcion' => 'required|unique:idiomas'
+            'nombre' => 'required',
+            'email' => 'email'
         ];
         $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
-            return Redirect::to('idiomas')
+            return Redirect::to('iglesias/create')
                 ->withErrors($validator)
                 ->withInput($request->all());
         } else {
             // store
             $input = $request->all();
-            
-            Idioma::create($input);
 
-            Session::flash('flash_message', 'Nuevo idioma guardado con &eacute;xito!');
+            Iglesia::create($input);
 
-            return redirect('/idiomas');
+            Session::flash('flash_message', 'Nueva iglesia creada con &eacute;xito!');
+
+            return redirect('/iglesias');
         }
     }
 
@@ -90,7 +87,16 @@ class IdiomasController extends Controller
      */
     public function edit($id)
     {
-        //
+        $iglesia = Iglesia::findOrFail($id);
+
+        $personas = Persona::select('id', DB::raw('concat(nombre, " ", apellido) as apellido'))
+            ->orderBy('apellido')
+            ->pluck('apellido', 'id');
+
+        return $this->vista('iglesias.edit', [
+            'iglesia' => $iglesia,
+            'personas' => $personas
+        ]);
     }
 
     /**
@@ -103,25 +109,26 @@ class IdiomasController extends Controller
     public function update(Request $request, $id)
     {
         $rules = [
-            'descripcion' => 'required|unique:idiomas'
+            'nombre' => 'required',
+            'email' => 'email'
         ];
         $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
-            return Redirect::to('idiomas')
+            return Redirect::to('iglesias/update')
                 ->withErrors($validator)
                 ->withInput($request->all());
         } else {
             // store
             $input = $request->all();
 
-            $idioma = Idioma::findOrFail($id);
-            
-            $idioma->fill($input)->save();
+            $iglesia = Iglesia::findOrFail($id);
 
-            Session::flash('flash_message', 'idioma editado con &eacute;xito!');
+            $iglesia->fill($input)->save();
 
-            return redirect('/idiomas');
+            Session::flash('flash_message', 'Datos de iglesia modificados con &eacute;xito!');
+
+            return redirect('/iglesias');
         }
     }
 
@@ -133,8 +140,8 @@ class IdiomasController extends Controller
      */
     public function destroy($id)
     {
-        $idioma = Idioma::findOrFail($id);
-        $idioma->delete();
-        return redirect('/idiomas');
+        $iglesia = Iglesia::findOrFail($id);
+        $iglesia->delete();
+        return redirect('/iglesias');
     }
 }
