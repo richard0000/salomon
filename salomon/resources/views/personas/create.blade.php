@@ -20,7 +20,7 @@
 	{!! Form::open(['url' => 'personas']) !!}
 		<p>
 		    <label for="nombre" class="{{ $errors->has('nombre') ? ' w3-validate' : '' }}">Nombre:</label>
-		    {!! Form::text('nombre', null, ['class' => 'w3-input', 'required' => 'required' ]) !!}
+		    {!! Form::text('nombre', null, ['class' => 'w3-input w3-animate-input', 'style' => 'width:40%', 'required' => 'required' ]) !!}
 	        @if ($errors->has('nombre'))
 	             <div class="w3-animate-fading w3-text-red">
 	                {{ $errors->first('nombre') }}
@@ -30,7 +30,7 @@
 
 		<p>
 		    <label for="apellido" class="{{ $errors->has('apellido') ? ' w3-validate' : '' }}">Apellido:</label>
-		    {!! Form::text('apellido', null, ['class' => 'w3-input', 'required' => 'required' ]) !!}
+		    {!! Form::text('apellido', null, ['class' => 'w3-input w3-animate-input', 'style' => 'width:40%', 'required' => 'required' ]) !!}
 	        @if ($errors->has('apellido'))
 	             <div class="w3-animate-fading w3-text-red">
 	                {{ $errors->first('apellido') }}
@@ -40,27 +40,27 @@
 
 		<p>
 		    {!! Form::label('direccion', 'Direcci&oacute;n:') !!}
-		    {!! Form::text('direccion', null, ['class' => 'w3-input']) !!}
+		    {!! Form::text('direccion', null, ['class' => 'w3-input w3-animate-input', 'style' => 'width:40%']) !!}
 		</p>
 
 		<p>
 		    {!! Form::label('telefono1', 'Celular:') !!}
-		    {!! Form::text('telefono1', null, ['class' => 'w3-input']) !!}
+		    {!! Form::text('telefono1', null, ['class' => 'w3-input w3-animate-input', 'style' => 'width:40%']) !!}
 		</p>
 
 		<p>
 		    {!! Form::label('telefono 2', 'Tel&eacute;fono Particular:') !!}
-		    {!! Form::text('telefono 2', null, ['class' => 'w3-input']) !!}
+		    {!! Form::text('telefono 2', null, ['class' => 'w3-input w3-animate-input', 'style' => 'width:40%']) !!}
 		</p>
 
 		<p>
 		    {!! Form::label('telefono 3', 'Tel&eacute;fono Laboral:') !!}
-		    {!! Form::text('telefono 3', null, ['class' => 'w3-input']) !!}
+		    {!! Form::text('telefono 3', null, ['class' => 'w3-input w3-animate-input', 'style' => 'width:40%']) !!}
 		</p>
 
 		<p>
 		    <label for="email" class="{{ $errors->has('email') ? ' w3-validate' : '' }}">Email:</label>
-		    {!! Form::text('email', null, ['class' => 'w3-input']) !!}
+		    {!! Form::text('email', null, ['class' => 'w3-input w3-animate-input', 'style' => 'width:40%']) !!}
 	        @if ($errors->has('email'))
 	             <div class="w3-animate-fading w3-text-red">
 	                {{ $errors->first('email') }}

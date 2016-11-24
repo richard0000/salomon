@@ -24,6 +24,7 @@ class DiezmosController extends Controller
 
         /*personas para mostrar en el select*/
         $personas = Persona::select('id', DB::raw('concat(nombre, " ", apellido) as apellido'))
+            ->where('iglesia_id', $this->iglesia)
             ->orderBy('apellido')
             ->pluck('apellido', 'id')
             ->prepend('--TODOS--', 0);
@@ -41,7 +42,7 @@ class DiezmosController extends Controller
                 ->orderBy('fecha')->paginate(30);
         }
 
-        return $this->vista('diezmos.index', [
+        return view('diezmos.index', [
             'diezmos' => $diezmos,
             'personas' => $personas,
             'persona_id' => $persona_id
@@ -59,7 +60,7 @@ class DiezmosController extends Controller
             ->orderBy('apellido')
             ->pluck('apellido', 'id');
 
-        return $this->vista('diezmos.create', [
+        return view('diezmos.create', [
             'personas' => $personas
         ]);
     }
@@ -122,7 +123,7 @@ class DiezmosController extends Controller
             ->orderBy('apellido')
             ->pluck('apellido', 'id');
 
-        return $this->vista('diezmos.edit', [
+        return view('diezmos.edit', [
             'diezmo' => $diezmo,
             'personas' => $personas
         ]);

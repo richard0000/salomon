@@ -8,7 +8,7 @@
         {!! Form::open(['method' => 'PATCH', 'id' => 'formEdit', 'route' => ['territorios.update', 1]]) !!}
 		<p>
 		    {!! Form::label('descripcion', 'Nombre:') !!}
-		    {!! Form::text('descripcion', null, ['class' => 'w3-input',' id' => 'descripcion_e']) !!}
+		    {!! Form::text('descripcion', null, ['class' => 'w3-input w3-animate-input', 'style' => 'width:40%',' id' => 'descripcion_e']) !!}
 		</p>
 
 		<p>

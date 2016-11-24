@@ -19,7 +19,7 @@ class IglesiasController extends Controller
     {
         $iglesias = Iglesia::orderBy('nombre')->paginate(10);
 
-        return $this->vista('iglesias.index', ['iglesias'=> $iglesias]);
+        return view('iglesias.index', ['iglesias'=> $iglesias]);
     }
 
     /**
@@ -33,7 +33,7 @@ class IglesiasController extends Controller
             ->orderBy('apellido')
             ->pluck('apellido', 'id');
 
-        return $this->vista('iglesias.create', [
+        return view('iglesias.create', [
             'personas' => $personas
         ]);
     }
@@ -93,7 +93,7 @@ class IglesiasController extends Controller
             ->orderBy('apellido')
             ->pluck('apellido', 'id');
 
-        return $this->vista('iglesias.edit', [
+        return view('iglesias.edit', [
             'iglesia' => $iglesia,
             'personas' => $personas
         ]);

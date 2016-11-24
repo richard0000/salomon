@@ -6,6 +6,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\Request;
 use App\Iglesia;
 
 class Controller extends BaseController
@@ -16,17 +17,16 @@ class Controller extends BaseController
     * Variable para acceder a la iglesia actual en cualquier parte del sistema
     *
     */
-    protected $iglesiaSingleton;
+    protected $iglesia = 1;
 
     /**
-    * Constructor de Controller. Agrega una instancia única (singleton)
-    * de la clase Iglesia
+    * Función para setear la variable $iglesia con una petición ajax PATCH
     *
     * @return void
     */
-    public function __construct(Iglesia $iglesia)
+    public function setIglesia(Request $request)
     {
-    	$this->iglesiaSingleton = $iglesia;	
+        $this->iglesia = $request->get('id');
     }
 
     /**
@@ -36,21 +36,6 @@ class Controller extends BaseController
     */
     public function welcome()
     {
-    	return $this->vista('welcome');
-    }
-
-    /**
-    * Página de inicio
-    *
-    * @return void
-    */
-    public function vista(string $view, array $args = [])
-    {
-        $iglesiaS = $this->iglesiaSingleton
-            ->pluck('nombre', 'id');
-
-        $args = array_add($args, 'iglesiaS', $iglesiaS);
-
-        return view($view, $args);
+    	return view('welcome');
     }
 }

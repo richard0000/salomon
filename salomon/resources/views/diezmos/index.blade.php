@@ -7,7 +7,7 @@
 	@include('partials.messages')
 
 	<!--Encabezado-->
-	<div class="w3-panel w3-display-container w3-card-8" style="height:100px;">
+	<div class="w3-panel w3-display-container w3-card-8" style="height:100px; background-image: url('img/backgrounds/hands.jpg');">
 		<div class="w3-row">
 			<div class="w3-col m6 l11">
 				<h1>Diezmos</h1>

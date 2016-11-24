@@ -29,7 +29,7 @@ class IdiomasController extends Controller
     {
         $idiomas = Idioma::orderBy('descripcion')->paginate(10);
 
-        return $this->vista('idiomas/index', ['idiomas'=> $idiomas]);
+        return view('idiomas/index', ['idiomas'=> $idiomas]);
     }
 
     /**

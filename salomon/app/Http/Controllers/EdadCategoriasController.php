@@ -30,7 +30,7 @@ class EdadCategoriasController extends Controller
     {
         $edadCategorias = edadCategoria::orderBy('descripcion')->paginate(10);
 
-        return $this->vista('edadcategorias/index', ['edadCategorias'=> $edadCategorias]);
+        return view('edadcategorias/index', ['edadCategorias'=> $edadCategorias]);
     }
 
     /**

@@ -17,3 +17,4 @@ Route::get('/territorio', 'TerritoriosController@getTerritorio');//->middleware(
 Route::get('/idioma', 'IdiomasController@getIdioma');//->middleware('auth:api');
 Route::get('/ocupacion', 'OcupacionesController@getOcupacion');//->middleware('auth:api');
 Route::get('/edadcategoria', 'edadCategoriasController@getEdadCategoria');//->middleware('auth:api');
+Route::patch('/iglesia', 'Controller@setIglesia');

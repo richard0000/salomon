@@ -22,32 +22,32 @@
         {!! Form::model($iglesia, ['method' => 'PATCH', 'id' => 'formEdit', 'route' => ['iglesias.update', 1]]) !!}
 		<p>
 		    {!! Form::label('nombre', 'Nombre:') !!}
-		    {!! Form::text('nombre', null, ['class' => 'w3-input']) !!}
+		    {!! Form::text('nombre', null, ['class' => 'w3-input w3-animate-input', 'style' => 'width:40%']) !!}
 		</p>
 
 		<p>
 		    {!! Form::label('direccion', 'Direccion:') !!}
-		    {!! Form::text('direccion', null, ['class' => 'w3-input']) !!}
+		    {!! Form::text('direccion', null, ['class' => 'w3-input w3-animate-input', 'style' => 'width:40%']) !!}
 		</p>
 
 		<p>
 		    {!! Form::label('telefono1', 'Tel&eacute;fono 1:') !!}
-		    {!! Form::text('telefono1', null, ['class' => 'w3-input']) !!}
+		    {!! Form::text('telefono1', null, ['class' => 'w3-input w3-animate-input', 'style' => 'width:40%']) !!}
 		</p>
 
 		<p>
 		    {!! Form::label('telefono2', 'Tel&eacute;fono 2:') !!}
-		    {!! Form::text('telefono2', null, ['class' => 'w3-input']) !!}
+		    {!! Form::text('telefono2', null, ['class' => 'w3-input w3-animate-input', 'style' => 'width:40%']) !!}
 		</p>
 
 		<p>
 		    {!! Form::label('telefono3', 'Tel&eacute;fono 3:') !!}
-		    {!! Form::text('telefono3', null, ['class' => 'w3-input']) !!}
+		    {!! Form::text('telefono3', null, ['class' => 'w3-input w3-animate-input', 'style' => 'width:40%']) !!}
 		</p>
 
 		<p>
 		    {!! Form::label('email', 'Email:') !!}
-		    {!! Form::text('email', null, ['class' => 'w3-input']) !!}
+		    {!! Form::text('email', null, ['class' => 'w3-input w3-animate-input', 'style' => 'width:40%']) !!}
 		</p>
 
 		<p>

@@ -34,7 +34,7 @@
 
 	<p>
 		<label for="importe" class="{{ $errors->has('importe') ? ' w3-validate' : '' }}">Importe:</label>
-	    {!! Form::text('importe', null, ['class' => 'w3-input']) !!}
+	    {!! Form::text('importe', null, ['class' => 'w3-input w3-animate-input', 'style' => 'width:40%']) !!}
         @if ($errors->has('importe'))
              <div class="w3-animate-fading w3-text-red">
                 {{ $errors->first('importe') }}

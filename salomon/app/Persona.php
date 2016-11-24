@@ -59,7 +59,8 @@ class Persona extends Model
         'madre_id',
         'hijo_id',
         'hija_id',
-        'mentor_id'
+        'mentor_id',
+        'iglesia_id'
 	];
 
     /**

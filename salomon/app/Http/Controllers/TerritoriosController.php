@@ -30,7 +30,7 @@ class TerritoriosController extends Controller
     {
         $territorios = Territorio::orderBy('descripcion')->paginate(10);
 
-        return $this->vista('territorios/index', ['territorios'=> $territorios]);
+        return view('territorios/index', ['territorios'=> $territorios]);
     }
 
     /**

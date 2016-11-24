@@ -22,7 +22,7 @@ class PersonasController extends Controller
     {
         $personas = Persona::orderBy('nombre', 'apellido')->paginate(10);
 
-        return $this->vista('personas/index', ['personas'=> $personas]);
+        return view('personas/index', ['personas'=> $personas]);
     }
 
     /**
@@ -43,7 +43,7 @@ class PersonasController extends Controller
 
         $personas = Persona::orderBy('nombre', 'apellido')->get();
 
-        return $this->vista('personas.create', [
+        return view('personas.create', [
             'personas' => $personas,
             'idiomas' => $idiomas,
             'territorios' => $territorios,
@@ -120,7 +120,7 @@ class PersonasController extends Controller
 
         $persona = Persona::findOrFail($id);
 
-        return $this->vista('personas.edit', [
+        return view('personas.edit', [
             'persona' => $persona,
             'idiomas' => $idiomas,
             'territorios' => $territorios,

@@ -8,17 +8,17 @@
         {!! Form::open(['method' => 'PATCH', 'id' => 'formEdit', 'route' => ['idiomas.update', 1]]) !!}
 		<p>
 		    {!! Form::label('descripcion', 'Descripci&oacute;n:') !!}
-		    {!! Form::text('descripcion', null, ['class' => 'w3-input']) !!}
+		    {!! Form::text('descripcion', null, ['class' => 'w3-input w3-animate-input', 'style' => 'width:40%']) !!}
 		</p>
 
 		<p>
 		    {!! Form::label('desde', 'Desde:') !!}
-		    {!! Form::text('desde', null, ['class' => 'w3-input']) !!}
+		    {!! Form::text('desde', null, ['class' => 'w3-input w3-animate-input', 'style' => 'width:40%']) !!}
 		</p>
 
 		<p>
 		    {!! Form::label('hasta', 'Hasta:') !!}
-		    {!! Form::text('hasta', null, ['class' => 'w3-input']) !!}
+		    {!! Form::text('hasta', null, ['class' => 'w3-input w3-animate-input', 'style' => 'width:40%']) !!}
 		</p>
 
 		<p>

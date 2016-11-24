@@ -8,7 +8,7 @@
 	{!! Form::open(['url' => 'ocupaciones']) !!}
 		<p>
 		    {!! Form::label('descripcion', 'Nombre:') !!}
-		    {!! Form::text('descripcion', null, ['class' => 'w3-input']) !!}
+		    {!! Form::text('descripcion', null, ['class' => 'w3-input w3-animate-input', 'style' => 'width:40%']) !!}
 		</p>
 
 		<p>
