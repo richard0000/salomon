@@ -27,55 +27,50 @@ $(function () {
 });
 
 function barras(diezmos){
-    $('#container').highcharts({
-        chart: {
-            type: 'column'
-        },
-        title: {
-            text: 'Diezmos'
-        },
-        subtitle: {
-            text: 'Grafico'
-        },
-        xAxis: {
-            type: 'category',
-            labels: {
-                rotation: -45,
-                style: {
-                    fontSize: '13px',
-                    fontFamily: 'Verdana, sans-serif'
-                }
-            }
-        },
-        yAxis: {
-            title: {
-                text: 'Diezmos por mes (importe)'
-            }
-        },
-        credits: {
-            enabled: false
-        },
-        legend: {
-            enabled: false
-        },
-        tooltip: {
-            pointFormat: 'Importe: <b>{point.y:.1f} (ganancias))</b>'
-        },
-        series: [{
-            name: 'diezmos',
-            data: jQuery.parseJSON(diezmos),
-            }],
-            dataLabels: {
-                enabled: true,
-                rotation: -90,
-                color: '#FFFFFF',
-                align: 'right',
-                format: '{point.y:.1f}', // one decimal
-                y: 10, // 10 pixels down from the top
-                style: {
-                    fontSize: '13px',
-                    fontFamily: 'Verdana, sans-serif'
-                }
-            }
-    });
+	Highcharts.chart('container', {
+	        chart: {
+	            type: 'column'
+	        },
+	        title: {
+	            text: 'Diezmos por Mes'
+	        },
+	        xAxis: {
+	            type: 'category',
+	            labels: {
+	                rotation: -45,
+	                style: {
+	                    fontSize: '13px',
+	                    fontFamily: 'Verdana, sans-serif'
+	                }
+	            }
+	        },
+	        yAxis: {
+	            min: 0,
+	            title: {
+	                text: 'Importe ($)'
+	            }
+	        },
+	        legend: {
+	            enabled: true
+	        },
+	        tooltip: {
+	            pointFormat: '<b>{point.y:.1f} pesos</b>'
+	        },
+	        series: [{
+	            name: 'Meses',
+	            data: diezmos,
+	            dataLabels: {
+	                enabled: true,
+	                rotation: -90,
+	                color: '#FFFFFF',
+	                align: 'right',
+	                format: '{point.y:.1f}', // one decimal
+	                y: 10, // 10 pixels down from the top
+	                style: {
+	                    fontSize: '13px',
+	                    fontFamily: 'Verdana, sans-serif'
+	                }
+	            }
+	        }]
+	});
 }
