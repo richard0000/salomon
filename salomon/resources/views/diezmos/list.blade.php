@@ -14,9 +14,9 @@
         @foreach($diezmos as $diezmo)
             <tr class="w3-hover-grey">
                 <td>{{ $diezmo->fecha->diffForHumans() .  ' (' . $diezmo->fecha->format('d-m-Y') . ')' }}</td>
-                <td>{{ $diezmo->persona->nombre }}</td>
-                <td>{{ $diezmo->persona->apellido }}</td>
-                <td>{{ $diezmo->persona->telefono1 }}</td>
+                <td>{{ $diezmo->persona['nombre'] }}</td>
+                <td>{{ $diezmo->persona['apellido'] }}</td>
+                <td>{{ $diezmo->persona['telefono1'] }}</td>
                 <td>{{ $diezmo->importe }}</td>
                 <td>
                     {!! Form::open([

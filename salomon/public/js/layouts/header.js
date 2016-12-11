@@ -1,4 +1,4 @@
-$('#iglesias').on('click', function(){
+$('#iglesias').on('change', function(){
 	iglesiaId = $('#iglesias').val();
 
 	$.ajax({
@@ -8,7 +8,8 @@ $('#iglesias').on('click', function(){
 
 		success:  function (especialidad)
 		{
-			console.log('success!');
+			//recargamos la url actual
+			location.reload();
 		}
 	});
 });

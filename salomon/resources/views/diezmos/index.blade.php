@@ -45,8 +45,17 @@
 		</div>
 	</div>
 
-	<!--Lista de diezmos-->
-    @include('diezmos.list')
+	<div class="w3-panel w3-display-container w3-card-8" style="height:100px;">
+		<div class="w3-row">
+			<div class="w3-col m6 l12">
+				<!--Lista de diezmos-->
+	    		@include('diezmos.list')
+			<div>
+			<div class="w3-col m6 l0">
+				@include('diezmos.graph')
+	    	</div>
+	    </div>
+    </div>
 
     <!--Ventana modal para eliminación de diezmos-->
     @include('diezmos.delete')

@@ -8,6 +8,7 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use App\Iglesia;
+use App\Configuracion;
 
 class Controller extends BaseController
 {
@@ -17,7 +18,12 @@ class Controller extends BaseController
     * Variable para acceder a la iglesia actual en cualquier parte del sistema
     *
     */
-    protected $iglesia = 1;
+    protected $configuracion;
+
+    public function __construct(Configuracion $configuracion)
+    {
+        $this->configuracion = $configuracion;
+    }
 
     /**
     * Función para setear la variable $iglesia con una petición ajax PATCH
@@ -26,7 +32,13 @@ class Controller extends BaseController
     */
     public function setIglesia(Request $request)
     {
-        $this->iglesia = $request->get('id');
+        $conf = $this->configuracion
+            ->where('clave', 'iglesia')->get()->first();
+
+        $conf->fill([
+            'clave' => 'iglesia',
+            'valor' => $request->get('id')
+        ])->save();
     }
 
     /**

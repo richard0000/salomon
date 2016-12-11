@@ -7,6 +7,7 @@ use App\Persona;
 use App\Territorio;
 use App\Ocupacion;
 use App\Idioma;
+use App\Configuracion;
 use Carbon\Carbon;
 
 use Validator, Redirect, Input, Session;
@@ -20,7 +21,10 @@ class PersonasController extends Controller
      */
     public function index()
     {
-        $personas = Persona::orderBy('nombre', 'apellido')->paginate(10);
+        $iglesia = $this->configuracion->getIglesia();
+
+        $personas = Persona::where('iglesia_id', $iglesia)
+            ->orderBy('nombre', 'apellido')->paginate(10);
 
         return view('personas/index', ['personas'=> $personas]);
     }
@@ -73,7 +77,11 @@ class PersonasController extends Controller
                 ->withInput($request->all());
         } else {
             // store
+            $iglesia = $this->configuracion->getIglesia();
+
             $input = $request->all();
+
+            $input['iglesia_id'] = $iglesia;
 
             if (($input['fecha_de_nacimiento'] !== null)&&($input['fecha_de_nacimiento'] !== '')) {
                 dd($input['fecha_de_nacimiento'] == '');

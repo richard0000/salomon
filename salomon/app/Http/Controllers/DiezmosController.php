@@ -11,20 +11,46 @@ use Validator, Redirect, Input, Session, DB;
 
 class DiezmosController extends Controller
 {
+    public function diezmosPorMes(Request $request)
+    {
+        if($request->get('persona_id') !== null){
+            $persona_id = $request->get('persona_id');
+
+            $diezmos = DB::table('diezmos')
+                ->select(DB::raw('month(fecha) as mes, importe'))
+                ->where('persona_id', $persona_id)
+                ->get();
+        }else{
+            //TO DO
+        }
+
+        return response()->json($this->prepareDiezmosForChart($diezmos));
+    }
+
+    public function prepareDiezmosForChart($diezmos)
+    {
+        $result = [];
+        foreach ($diezmos as $key => $value) {
+            $result[$key] = ['name' => $value->mes, 'y' => intval($value->importe)];
+        }
+
+        return $result;
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
-    {
-        //Para mosrar las fechas en castellano
+    {   //Para mosrar las fechas en castellano
         Carbon::setLocale('es');
         setlocale(LC_TIME, config('app.locale'));
 
+        $iglesia = $this->configuracion->getIglesia();
+
         /*personas para mostrar en el select*/
         $personas = Persona::select('id', DB::raw('concat(nombre, " ", apellido) as apellido'))
-            ->where('iglesia_id', $this->iglesia)
+            ->where('iglesia_id', $iglesia)
             ->orderBy('apellido')
             ->pluck('apellido', 'id')
             ->prepend('--TODOS--', 0);
@@ -39,7 +65,10 @@ class DiezmosController extends Controller
                 ->paginate(30);
         }else{
             $diezmos = Diezmo::with('persona')
-                ->orderBy('fecha')->paginate(30);
+                ->join('personas', 'persona_id', 'personas.id')
+                ->where('personas.iglesia_id', $iglesia)
+                ->orderBy('fecha')
+                ->paginate(30);
         }
 
         return view('diezmos.index', [

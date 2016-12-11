@@ -73,6 +73,10 @@ class Persona extends Model
 		'updated_at'
 	];
 
+    /**
+    * Relación con modelo de diezmos
+    * retorna los diezmos de una persona
+    */
     public function diezmos()
     {
         return $this->hasMany('App\Diezmo');
