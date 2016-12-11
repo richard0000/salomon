@@ -13,15 +13,28 @@ class DiezmosController extends Controller
 {
     public function diezmosPorMes(Request $request)
     {
-        if($request->get('persona_id') !== null){
+        $iglesia = $this->configuracion->getIglesia();
+
+        if(($request->get('persona_id') !== null)&&($request->get('persona_id') !== '0')){
             $persona_id = $request->get('persona_id');
 
             $diezmos = DB::table('diezmos')
-                ->select(DB::raw('month(fecha) as mes, importe'))
+                ->select(DB::raw('month(fecha) as mes, sum(importe) as importe'))
                 ->where('persona_id', $persona_id)
+                ->groupBy('mes')
+                ->orderBy('mes')
                 ->get();
         }else{
-            //TO DO
+            $personasIglesia = Persona::where('iglesia_id', $iglesia)
+                ->select('id')
+                ->get();
+
+            $diezmos = DB::table('diezmos')
+                ->select(DB::raw('persona_id, month(fecha) as mes, sum(importe) as importe'))
+                ->whereIn('persona_id', $personasIglesia)
+                ->groupBy(['persona_id', 'mes'])
+                ->orderBy('mes')
+                ->get();
         }
 
         return response()->json($this->prepareDiezmosForChart($diezmos));

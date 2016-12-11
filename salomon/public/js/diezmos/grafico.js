@@ -25,7 +25,44 @@ $(function () {
         }
     });
 });
-
+/*
+function lines(diezmos){
+    Highcharts.chart('container', {
+        title: {
+            text: 'Diezmos - Vista Anual',
+            x: -20 //center
+        },
+        subtitle: {
+            text: 'ICIA, Tu Hogar de Paz',
+            x: -20
+        },
+        xAxis: {
+            categories: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun',
+                'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
+        },
+        yAxis: {
+            title: {
+                text: 'Importe ($)'
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+        tooltip: {
+            valueSuffix: ' $'
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle',
+            borderWidth: 0
+        },
+        series: diezmos
+    });
+}
+*/
 function barras(diezmos){
 	Highcharts.chart('container', {
 	        chart: {
