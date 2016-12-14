@@ -84,7 +84,6 @@ class PersonasController extends Controller
             $input['iglesia_id'] = $iglesia;
 
             if (($input['fecha_de_nacimiento'] !== null)&&($input['fecha_de_nacimiento'] !== '')) {
-                dd($input['fecha_de_nacimiento'] == '');
                 $input['fecha_de_nacimiento'] = Carbon::createFromFormat('d-m-Y', $input['fecha_de_nacimiento']);
             }else{
                 $input['fecha_de_nacimiento'] = null;

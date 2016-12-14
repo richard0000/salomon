@@ -15,6 +15,5 @@ class configuracion_seeder extends Seeder
             'clave' => 'iglesia',
             'valor' => 1
         ]);
-
     }
 }
