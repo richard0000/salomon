@@ -4,7 +4,6 @@
 @endsection
 
 @section('content')
-	@include('partials.messages')
 	<!--Encabezado-->
 	<div class="w3-panel w3-display-container w3-card-8" style="height:100px;">
 		<div class="w3-row">

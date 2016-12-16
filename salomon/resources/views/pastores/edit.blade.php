@@ -4,18 +4,21 @@
 @endsection
 
 @section('content')
+	@include('partials.messages')
 	<!--Encabezado-->
 	<div class="w3-panel w3-display-container w3-card-8" style="height:100px;">
 		<div class="w3-row">
 			<div class="w3-col m6 l11">
-				<h1>Nueva Persona</h1>
+				<h1>Modificar Datos de {{ ucwords($pastor->nombre) . ' ' . ucwords($pastor->apellido) }}</h1>
 			</div>
 			<div class="w3-col m6 l1 w3-display-right">
 			</div>
 		</div>
 	</div>
-
-	{!! Form::open(['url' => 'personas']) !!}
+    {!! Form::model($pastor, [
+    	'method' => 'PATCH', 
+    	'route' => ['pastores.update', $pastor->id]])
+     !!}
 		<p>
 		    <label for="nombre" class="{{ $errors->has('nombre') ? ' w3-validate' : '' }}">Nombre:</label>
 		    {!! Form::text('nombre', null, ['class' => 'w3-input w3-animate-input', 'style' => 'width:40%', 'required' => 'required' ]) !!}
@@ -75,7 +78,6 @@
 	            </div>
 	        @endif
 		</p>
-
 		<p>
 		    {!! Form::label('sexo', 'G&eacute;nero:') !!}
 		    {!! Form::select('sexo', ['M' => 'Masculino', 'F' => 'Femenino'], null, ['class' => 'w3-input']) !!}
@@ -84,21 +86,6 @@
 		<p>
 		    {!! Form::label('estado_civil', 'Estado Civil:') !!}
 		    {!! Form::select('estado_civil', [1 => 'Casado', 2 => 'Soltero', 3 => 'Divorciado'], null, ['class' => 'w3-input']) !!}
-		</p>
-
-		<p>
-		    {!! Form::label('idioma_id', 'Idioma:') !!}
-		    {!! Form::select('idioma_id', $idiomas, null, ['class' => 'w3-input']) !!}
-		</p>
-
-		<p>
-		    {!! Form::label('ocupacion_id', 'Ocupaci&oacute;n:') !!}
-		    {!! Form::select('ocupacion_id', $ocupaciones, null, ['class' => 'w3-input']) !!}
-		</p>
-
-		<p>
-		    {!! Form::label('territorio_id', 'Territorio:') !!}
-		    {!! Form::select('territorio_id', $territorios, null, ['class' => 'w3-input']) !!}
 		</p>
 
 		<p>
@@ -114,4 +101,5 @@
 
 @section('scripts')
 	{{ Html::script('js/datepicker.js') }}
+	{{ Html::script('js/pastores/edit.js') }}
 @endsection

@@ -81,4 +81,14 @@ class Persona extends Model
     {
         return $this->hasMany('App\Diezmo');
     }
+
+    public function mentor()
+    {
+        return $this->hasOne('App\Persona', 'id', 'mentor_id');
+    }
+
+    public function scopePastores($query)
+    {
+        return $query->where('mentor_id', 1);
+    }
 }
