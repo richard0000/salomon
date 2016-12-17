@@ -69,7 +69,7 @@ class DiezmosController extends Controller
             ->prepend('--TODOS--', 0);
 
         /*persona actualmente seleccionada*/
-        $persona_id = $request->get('persona_id') ?? null;
+        $persona_id = $request->get('persona_id');
 
         /*vemos si hay seleccionada una persona o todos*/
         if(($persona_id !== null)&&($persona_id !== '0')){
