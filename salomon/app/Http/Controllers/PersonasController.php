@@ -72,7 +72,7 @@ class PersonasController extends Controller
         $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
-            return Redirect::to('personas')
+            return Redirect::to('/personas/create')
                 ->withErrors($validator)
                 ->withInput($request->all());
         } else {
@@ -153,11 +153,11 @@ class PersonasController extends Controller
         $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
-            return Redirect::to('personas')
+            return Redirect::to('personas/edit')
                 ->withErrors($validator)
                 ->withInput($request->all());
         } else {
-            // store
+            // update
             $input = $request->all();
             
             if (($input['fecha_de_nacimiento'] !== null)&&($input['fecha_de_nacimiento'] !== '')) {

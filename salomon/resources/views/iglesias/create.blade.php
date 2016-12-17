@@ -49,7 +49,7 @@
 
 		<p>
 		    {!! Form::label('pastor_id', 'Pastor:') !!}
-		    {!! Form::select('pastor_id', $personas, null, ['class' => 'w3-input']) !!}
+		    {!! Form::select('pastor_id', $pastores, null, ['class' => 'w3-input']) !!}
 		</p>
 
 		<p>

@@ -4,7 +4,6 @@
 @endsection
 
 @section('content')
-	@include('partials.messages')
 	<!--Encabezado-->
 	<div class="w3-panel w3-display-container w3-card-8" style="height:100px;">
 		<div class="w3-row">
@@ -52,7 +51,7 @@
 
 		<p>
 		    {!! Form::label('pastor_id', 'Pastor:') !!}
-		    {!! Form::select('pastor_id', $personas, null, ['class' => 'w3-input']) !!}
+		    {!! Form::select('pastor_id', $pastores, null, ['class' => 'w3-input']) !!}
 		</p>
 		<p>
 			{!! Form::submit('Aceptar', ['class' => 'w3-btn w3-grey'])  !!}

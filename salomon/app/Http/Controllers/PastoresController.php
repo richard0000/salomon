@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Iglesia;
 use App\Persona;
+use App\Territorio;
+use App\Ocupacion;
+use App\Idioma;
+use Carbon\Carbon;
 
-use Validator, Redirect, Input, Session, DB;
+use Validator, Redirect, Input, Session;
 
-class IglesiasController extends Controller
+class PastoresController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,9 +20,10 @@ class IglesiasController extends Controller
      */
     public function index()
     {
-        $iglesias = Iglesia::orderBy('nombre')->paginate(10);
+        $pastores = Persona::pastores()
+            ->orderBy('nombre', 'apellido')->paginate(10);
 
-        return view('iglesias.index', ['iglesias'=> $iglesias]);
+        return view('pastores/index', ['pastores'=> $pastores]);
     }
 
     /**
@@ -29,13 +33,7 @@ class IglesiasController extends Controller
      */
     public function create()
     {
-        $pastores = Persona::pastores()->select('id', DB::raw('concat(nombre, " ", apellido) as apellido'))
-            ->orderBy('apellido')
-            ->pluck('apellido', 'id');
-
-        return view('iglesias.create', [
-            'pastores' => $pastores
-        ]);
+        return view('pastores.create');
     }
 
     /**
@@ -47,24 +45,34 @@ class IglesiasController extends Controller
     public function store(Request $request)
     {
         $rules = [
+            'apellido' => 'required',
             'nombre' => 'required',
-            'email' => 'email'
+            'email' => 'email',
+            'fecha_de_nacimiento' => 'date_format:d-m-Y'
         ];
         $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
-            return Redirect::to('iglesias/create')
+            return Redirect::to('/pastores/create')
                 ->withErrors($validator)
                 ->withInput($request->all());
         } else {
             // store
             $input = $request->all();
 
-            Iglesia::create($input);
+            $input['mentor_id'] = 1;
 
-            Session::flash('flash_message', 'Nueva iglesia creada con &eacute;xito!');
+            if (($input['fecha_de_nacimiento'] !== null)&&($input['fecha_de_nacimiento'] !== '')) {
+                $input['fecha_de_nacimiento'] = Carbon::createFromFormat('d-m-Y', $input['fecha_de_nacimiento']);
+            }else{
+                $input['fecha_de_nacimiento'] = null;
+            }
 
-            return redirect('/iglesias');
+            Persona::create($input);
+
+            Session::flash('flash_message', 'Nuevo pastor guardado con &eacute;xito!');
+
+            return redirect('/pastores');
         }
     }
 
@@ -87,15 +95,10 @@ class IglesiasController extends Controller
      */
     public function edit($id)
     {
-        $iglesia = Iglesia::findOrFail($id);
+        $pastor = Persona::findOrFail($id);
 
-        $pastores = Persona::pastores()->select('id', DB::raw('concat(nombre, " ", apellido) as apellido'))
-            ->orderBy('apellido')
-            ->pluck('apellido', 'id');
-
-        return view('iglesias.edit', [
-            'iglesia' => $iglesia,
-            'pastores' => $pastores
+        return view('pastores.edit', [
+            'pastor' => $pastor
         ]);
     }
 
@@ -109,26 +112,36 @@ class IglesiasController extends Controller
     public function update(Request $request, $id)
     {
         $rules = [
+            'apellido' => 'required',
             'nombre' => 'required',
-            'email' => 'email'
+            'email' => 'email',
+            'fecha_de_nacimiento' => 'date_format:d-m-Y'
         ];
         $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
-            return Redirect::to('iglesias/update')
+            return Redirect::to('pastores/edit')
                 ->withErrors($validator)
                 ->withInput($request->all());
         } else {
-            // store
+            // update
             $input = $request->all();
 
-            $iglesia = Iglesia::findOrFail($id);
+            $input['mentor_id'] = 1;
+            
+            if (($input['fecha_de_nacimiento'] !== null)&&($input['fecha_de_nacimiento'] !== '')) {
+                $input['fecha_de_nacimiento'] = Carbon::createFromFormat('d-m-Y', $input['fecha_de_nacimiento']);
+            }else{
+                $input['fecha_de_nacimiento'] = null;
+            }
 
-            $iglesia->fill($input)->save();
+            $persona = Persona::findOrFail($id);
 
-            Session::flash('flash_message', 'Datos de iglesia modificados con &eacute;xito!');
+            $persona->fill($input)->save();
 
-            return redirect('/iglesias');
+            Session::flash('flash_message', 'Los datos fueron actualizados con &eacute;xito!');
+
+            return redirect('/pastores');
         }
     }
 
@@ -140,8 +153,8 @@ class IglesiasController extends Controller
      */
     public function destroy($id)
     {
-        $iglesia = Iglesia::findOrFail($id);
-        $iglesia->delete();
-        return redirect('/iglesias');
+        $pastor = Persona::findOrFail($id);
+        $pastor->delete();
+        return redirect('/personas');
     }
 }

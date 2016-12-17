@@ -13,7 +13,10 @@
 		<div id="Demo1" class="w3-accordion-content">
 			<a href="{{ url('/iglesias') }}">
 				<i class="fa fa-home"></i> Iglesias
-			</a>			
+			</a>
+			<a href="{{ url('/pastores') }}">
+				<i class="fa fa-home"></i> Pastores
+			</a>
 			<a href="{{ url('/ocupaciones') }}">
 				<i class="fa fa-graduation-cap"></i> Ocupaciones
 			</a>

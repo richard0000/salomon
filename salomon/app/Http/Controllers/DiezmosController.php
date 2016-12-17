@@ -188,7 +188,7 @@ class DiezmosController extends Controller
         $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
-            return Redirect::to('diezmos/update')
+            return Redirect::to('diezmos/edit')
                 ->withErrors($validator)
                 ->withInput($request->all());
         } else {
