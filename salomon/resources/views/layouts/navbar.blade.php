@@ -15,7 +15,7 @@
 				<i class="fa fa-home"></i> Iglesias
 			</a>
 			<a href="{{ url('/pastores') }}">
-				<i class="fa fa-home"></i> Pastores
+				<i class="fa fa-male"></i> Pastores
 			</a>
 			<a href="{{ url('/ocupaciones') }}">
 				<i class="fa fa-graduation-cap"></i> Ocupaciones
