@@ -27,7 +27,7 @@
 
 	<div class="w3-panel w3-display-container w3-card-8" style="height:100px;">
 		<div class="w3-row">
-			<div class="w3-col m6 l11">
+			<div class="w3-col m6 l6">
 				{!! Form::open([
 					'method' => 'GET',
 					'route' => ['diezmos.index']
@@ -35,6 +35,10 @@
 
 				    {!! Form::label('persona_id', 'Persona:') !!}
 				    {!! Form::select('persona_id', $personas, $persona_id, ['class' => 'w3-input']) !!}
+			</div>
+			<div class="w3-col m6 l5">
+				    {!! Form::label('anio', 'A&ntilde;o:') !!}
+				    {!! Form::select('anio', $anios, $anio, ['class' => 'w3-input']) !!}
 			</div>
 			<div class="w3-col m6 l1">
 				    <div class="w3-display-right">

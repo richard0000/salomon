@@ -14,6 +14,7 @@ class DiezmosController extends Controller
     public function diezmosPorMes(Request $request)
     {
         $iglesia = $this->configuracion->getIglesia();
+        $anio = $request->get('anio') ?? Carbon::now()->year;
 
         if(($request->get('persona_id') !== null)&&($request->get('persona_id') !== '0')){
             $persona_id = $request->get('persona_id');
@@ -21,6 +22,7 @@ class DiezmosController extends Controller
             $diezmos = DB::table('diezmos')
                 ->select(DB::raw('month(fecha) as mes, sum(importe) as importe'))
                 ->where('persona_id', $persona_id)
+                ->whereRaw('year(fecha) = ' . $anio)
                 ->groupBy('mes')
                 ->orderBy('mes')
                 ->get();
@@ -32,6 +34,7 @@ class DiezmosController extends Controller
             $diezmos = DB::table('diezmos')
                 ->select(DB::raw('persona_id, month(fecha) as mes, sum(importe) as importe'))
                 ->whereIn('persona_id', $personasIglesia)
+                ->whereRaw('year(fecha) = ' . $anio)
                 ->groupBy(['persona_id', 'mes'])
                 ->orderBy('mes')
                 ->get();
@@ -59,6 +62,7 @@ class DiezmosController extends Controller
         Carbon::setLocale('es');
         setlocale(LC_TIME, config('app.locale'));
 
+        $anios = $this->configuracion->getAnios();
         $iglesia = $this->configuracion->getIglesia();
 
         /*personas para mostrar en el select*/
@@ -70,6 +74,7 @@ class DiezmosController extends Controller
 
         /*persona actualmente seleccionada*/
         $persona_id = $request->get('persona_id');
+        $anio = $request->get('anio') ?? Carbon::now()->year;
 
         /*vemos si hay seleccionada una persona o todos*/
         if(($persona_id !== null)&&($persona_id !== '0')){
@@ -87,7 +92,9 @@ class DiezmosController extends Controller
         return view('diezmos.index', [
             'diezmos' => $diezmos,
             'personas' => $personas,
-            'persona_id' => $persona_id
+            'persona_id' => $persona_id,
+            'anios' => $anios,
+            'anio' => $anio
         ]);
     }
 
@@ -199,7 +206,7 @@ class DiezmosController extends Controller
             
             $diezmo = Diezmo::findOrFail($id);
 
-            $diezmo::fill($input)->save();
+            $diezmo->fill($input)->save();
 
             Session::flash('flash_message', 'Los datos del diezmo fueron modificados con &eacute;xito!');
 
