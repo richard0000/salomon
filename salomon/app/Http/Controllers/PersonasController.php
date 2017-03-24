@@ -24,7 +24,7 @@ class PersonasController extends Controller
         $iglesia = $this->configuracion->getIglesia();
 
         $personas = Persona::where('iglesia_id', $iglesia)
-            ->orderBy('nombre', 'apellido')->paginate(10);
+            ->orderBy('nombre')->paginate(10);
 
         return view('personas/index', ['personas'=> $personas]);
     }

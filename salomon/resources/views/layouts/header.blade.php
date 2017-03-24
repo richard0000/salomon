@@ -7,8 +7,10 @@
 				<h1>Salomon</h1>
 			</div>
 			<div class="w3-col m6 l2 w3-display-right">
+			    <!--
 			    {!! Form::label('iglesiaS', 'Iglesia:', ['class' => 'w3-large']) !!}
 			    {!! Form::select('iglesiaS', $iglesiaS, null, ['class' => 'w3-input w3-text-teal w3-large', 'id' => 'iglesias']) !!}
+			    -->
 			</div>
 		</div>
 	</div>

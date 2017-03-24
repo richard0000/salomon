@@ -14,11 +14,14 @@ class DiezmosController extends Controller
     public function diezmosPorMes(Request $request)
     {
         $iglesia = $this->configuracion->getIglesia();
-        $anio = $request->get('anio') ?? Carbon::now()->year;
+
+        $anio = Carbon::now()->year;
+        if($request->get('anio') ==! null){
+            $anio = $request->get('anio');
+        }
 
         if(($request->get('persona_id') !== null)&&($request->get('persona_id') !== '0')){
             $persona_id = $request->get('persona_id');
-
             $diezmos = DB::table('diezmos')
                 ->select(DB::raw('month(fecha) as mes, sum(importe) as importe'))
                 ->where('persona_id', $persona_id)
@@ -49,7 +52,6 @@ class DiezmosController extends Controller
         foreach ($diezmos as $key => $value) {
             $result[$key] = ['name' => $value->mes, 'y' => intval($value->importe)];
         }
-
         return $result;
     }
     /**
@@ -74,17 +76,23 @@ class DiezmosController extends Controller
 
         /*persona actualmente seleccionada*/
         $persona_id = $request->get('persona_id');
-        $anio = $request->get('anio') ?? Carbon::now()->year;
+
+        $anio = Carbon::now()->year;
+        if($request->get('anio') ==! null){
+            $anio = $request->get('anio');
+        }
 
         /*vemos si hay seleccionada una persona o todos*/
         if(($persona_id !== null)&&($persona_id !== '0')){
             $diezmos = Persona::findOrFail($persona_id)
                 ->diezmos()
+                ->whereRaw('year(fecha) = ' . $anio)
                 ->paginate(30);
         }else{
             $diezmos = Diezmo::with('persona')
                 ->join('personas', 'persona_id', 'personas.id')
                 ->where('personas.iglesia_id', $iglesia)
+                ->whereRaw('year(fecha) = ' . $anio)
                 ->orderBy('fecha')
                 ->paginate(30);
         }

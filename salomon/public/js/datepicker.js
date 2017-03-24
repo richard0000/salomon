@@ -6,6 +6,6 @@ $(function(){
 		changeMonth: true,
 		changeYear: true,
 		showAnim: 'blind',
-		dateFormat: 'd-m-yy'
+		dateFormat: 'd-m-Y'
 	});
 });
